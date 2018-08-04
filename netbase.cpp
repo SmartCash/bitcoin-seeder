@@ -455,6 +455,7 @@ bool IsProxy(const CNetAddr &addr) {
 
 bool ConnectSocket(const CService &addrDest, SOCKET& hSocketRet, int nTimeout)
 {
+    printf("ConnectSocket\n");
     const proxyType &proxy = proxyInfo[addrDest.GetNetwork()];
 
     // no proxy needed
@@ -487,6 +488,7 @@ bool ConnectSocket(const CService &addrDest, SOCKET& hSocketRet, int nTimeout)
 
 bool ConnectSocketByName(CService &addr, SOCKET& hSocketRet, const char *pszDest, int portDefault, int nTimeout)
 {
+    printf("ConnectSocketByName\n");
     string strDest;
     int port = portDefault;
     SplitHostPort(string(pszDest), port, strDest);

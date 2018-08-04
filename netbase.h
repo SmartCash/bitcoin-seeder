@@ -124,7 +124,7 @@ class CService : public CNetAddr
              CService* pthis = const_cast<CService*>(this);
              READWRITE(FLATDATA(ip));
              unsigned short portN = htons(port);
-             READWRITE(portN);
+             READWRITE(FLATDATA(portN));
              if (fRead)
                  pthis->port = ntohs(portN);
             )

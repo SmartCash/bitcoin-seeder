@@ -82,17 +82,17 @@ public:
           host = optarg;
           break;
         }
-        
+
         case 'm': {
           mbox = optarg;
           break;
         }
-        
+
         case 'n': {
           ns = optarg;
           break;
         }
-        
+
         case 't': {
           int n = strtol(optarg, NULL, 10);
           if (n > 0 && n < 1000) nThreads = n;
@@ -347,22 +347,22 @@ extern "C" void* ThreadDumper(void*) {
         }
         rename("dnsseed.dat.new", "dnsseed.dat");
       }
-      FILE *d = fopen("dnsseed.dump", "w");
-      fprintf(d, "# address                                        good  lastSuccess    %%(2h)   %%(8h)   %%(1d)   %%(7d)  %%(30d)  blocks      svcs  version\n");
-      double stat[5]={0,0,0,0,0};
-      for (vector<CAddrReport>::const_iterator it = v.begin(); it < v.end(); it++) {
-        CAddrReport rep = *it;
-        fprintf(d, "%-47s  %4d  %11" PRId64 "  %6.2f%% %6.2f%% %6.2f%% %6.2f%% %6.2f%%  %6i  %08" PRIx64 "  %5i \"%s\"\n", rep.ip.ToString().c_str(), (int)rep.fGood, rep.lastSuccess, 100.0*rep.uptime[0], 100.0*rep.uptime[1], 100.0*rep.uptime[2], 100.0*rep.uptime[3], 100.0*rep.uptime[4], rep.blocks, rep.services, rep.clientVersion, rep.clientSubVersion.c_str());
-        stat[0] += rep.uptime[0];
-        stat[1] += rep.uptime[1];
-        stat[2] += rep.uptime[2];
-        stat[3] += rep.uptime[3];
-        stat[4] += rep.uptime[4];
-      }
-      fclose(d);
-      FILE *ff = fopen("dnsstats.log", "a");
-      fprintf(ff, "%llu %g %g %g %g %g\n", (unsigned long long)(time(NULL)), stat[0], stat[1], stat[2], stat[3], stat[4]);
-      fclose(ff);
+      // // FILE *d = fopen("dnsseed.dump", "w");
+      // // fprintf(d, "# address                                        good  lastSuccess    %%(2h)   %%(8h)   %%(1d)   %%(7d)  %%(30d)  blocks      svcs  version\n");
+      // double stat[5]={0,0,0,0,0};
+      // for (vector<CAddrReport>::const_iterator it = v.begin(); it < v.end(); it++) {
+      //   CAddrReport rep = *it;
+      //   // fprintf(d, "%-47s  %4d  %11" PRId64 "  %6.2f%% %6.2f%% %6.2f%% %6.2f%% %6.2f%%  %6i  %08" PRIx64 "  %5i \"\n", rep.ip.ToString().c_str(), (int)rep.fGood, rep.lastSuccess, 100.0*rep.uptime[0], 100.0*rep.uptime[1], 100.0*rep.uptime[2], 100.0*rep.uptime[3], 100.0*rep.uptime[4], rep.blocks, rep.services, rep.clientVersion);
+      //   stat[0] += rep.uptime[0];
+      //   stat[1] += rep.uptime[1];
+      //   stat[2] += rep.uptime[2];
+      //   stat[3] += rep.uptime[3];
+      //   stat[4] += rep.uptime[4];
+      // }
+      // // fclose(d);
+      // FILE *ff = fopen("dnsstats.log", "a");
+      // fprintf(ff, "%llu %g %g %g %g %g\n", (unsigned long long)(time(NULL)), stat[0], stat[1], stat[2], stat[3], stat[4]);
+      // fclose(ff);
     }
   } while(1);
   return nullptr;
@@ -397,17 +397,20 @@ extern "C" void* ThreadStats(void*) {
   return nullptr;
 }
 
-static const string mainnet_seeds[] = {"dnsseed.bluematt.me", "bitseed.xf2.org", "dnsseed.bitcoin.dashjr.org", "seed.bitcoin.sipa.be", ""};
-static const string testnet_seeds[] = {"testnet-seed.alexykot.me",
-                                       "testnet-seed.bitcoin.petertodd.org",
-                                       "testnet-seed.bluematt.me",
-                                       "testnet-seed.bitcoin.schildbach.de",
+static const string mainnet_seeds[] = {"seed.smrt.cash", "seed1.smrt.cash", "seed2.smrt.cash","seed1.smartcash.org", "seed2.smartcash.org", "seed.smartcash.cc", "seed2.smartcash.cc","seed3.smartcash.cc", "seed4.smartcash.cc", ""};
+static const string testnet_seeds[] = {"testnet.smartcash.cc",
+                                       "testnet.smrt.cash",
                                        ""};
 static const string *seeds = mainnet_seeds;
 
 extern "C" void* ThreadSeeder(void*) {
   if (!fTestNet){
-    db.Add(CService("kjy2eqzk4zwi5zd3.onion", 8333), true);
+    db.Add(CService("217.61.105.174", 9678), true);
+    db.Add(CService("80.211.24.50", 9678), true);
+    db.Add(CService("94.177.171.251", 9678), true);
+    db.Add(CService("80.211.237.170", 9678), true);
+    db.Add(CService("80.211.224.98", 9678), true);
+    db.Add(CService("80.211.137.68", 9678), true);
   }
   do {
     for (int i=0; seeds[i] != ""; i++) {
@@ -459,10 +462,10 @@ int main(int argc, char **argv) {
   bool fDNS = true;
   if (opts.fUseTestNet) {
       printf("Using testnet.\n");
-      pchMessageStart[0] = 0x0b;
-      pchMessageStart[1] = 0x11;
-      pchMessageStart[2] = 0x09;
-      pchMessageStart[3] = 0x07;
+      pchMessageStart[0] = 0xcf;
+      pchMessageStart[1] = 0xfc;
+      pchMessageStart[2] = 0xbe;
+      pchMessageStart[3] = 0xea;
       seeds = testnet_seeds;
       fTestNet = true;
   }

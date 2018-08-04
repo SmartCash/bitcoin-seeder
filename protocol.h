@@ -15,10 +15,12 @@
 #include <string>
 #include "uint256.h"
 
+static const unsigned int MAX_REJECT_MESSAGE_LENGTH = 111;
+
 extern bool fTestNet;
 static inline unsigned short GetDefaultPort(const bool testnet = fTestNet)
 {
-    return testnet ? 18333 : 8333;
+    return testnet ? 19678 : 9678;
 }
 
 //
@@ -44,7 +46,6 @@ class CMessageHeader
              READWRITE(FLATDATA(pchMessageStart));
              READWRITE(FLATDATA(pchCommand));
              READWRITE(nMessageSize);
-             if (nVersion >= 209)
              READWRITE(nChecksum);
             )
 
@@ -77,9 +78,9 @@ class CAddress : public CService
              if (fRead)
                  pthis->Init();
              if (nType & SER_DISK)
-             READWRITE(nVersion);
-             if ((nType & SER_DISK) || (nVersion >= 31402 && !(nType & SER_GETHASH)))
-             READWRITE(nTime);
+                READWRITE(nVersion);
+             if ((nType & SER_DISK) || (nVersion >= 90013 && !(nType & SER_GETHASH)))
+                READWRITE(nTime);
              READWRITE(nServices);
              READWRITE(*pip);
             )
