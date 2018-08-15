@@ -397,21 +397,23 @@ extern "C" void* ThreadStats(void*) {
   return nullptr;
 }
 
-static const string mainnet_seeds[] = {"seed.smrt.cash", "seed1.smrt.cash", "seed2.smrt.cash","seed1.smartcash.org", "seed2.smartcash.org", "seed.smartcash.cc", "seed2.smartcash.cc","seed3.smartcash.cc", "seed4.smartcash.cc", ""};
+static const string mainnet_seeds[] = {"static-seed.smrt.cash",
+                                       "static-seed1.smrt.cash",
+                                       "static-seed2.smrt.cash",
+                                       "seed1.smartcash.org",
+                                       "seed2.smartcash.org",
+                                       "seed.smartcash.cc",
+                                       "seed2.smartcash.cc",
+                                       "seed3.smartcash.cc",
+                                       "seed4.smartcash.cc", ""};
+
 static const string testnet_seeds[] = {"testnet.smartcash.cc",
                                        "testnet.smrt.cash",
                                        ""};
 static const string *seeds = mainnet_seeds;
 
 extern "C" void* ThreadSeeder(void*) {
-  if (!fTestNet){
-    db.Add(CService("217.61.105.174", 9678), true);
-    db.Add(CService("80.211.24.50", 9678), true);
-    db.Add(CService("94.177.171.251", 9678), true);
-    db.Add(CService("80.211.237.170", 9678), true);
-    db.Add(CService("80.211.224.98", 9678), true);
-    db.Add(CService("80.211.137.68", 9678), true);
-  }
+
   do {
     for (int i=0; seeds[i] != ""; i++) {
       vector<CNetAddr> ips;
