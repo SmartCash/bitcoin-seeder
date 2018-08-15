@@ -1,0 +1,14 @@
+[Unit]
+Description=SmartCash DNS-Seeder
+After=network-online.target
+
+[Service]
+User=root
+Type=simple
+EnvironmentFile=/etc/.dns-seeder-config
+ExecStart=/usr/local/bin/dnsseed -h $SEED -n $SEEDER -m $EMAIL
+Restart=always
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target
