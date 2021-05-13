@@ -390,17 +390,22 @@ extern "C" void* ThreadStats(void*) {
   return nullptr;
 }
 
-static const string mainnet_seeds[] = {"static-seed.smrt.cash",
-                                       "static-seed1.smrt.cash",
-                                       "static-seed2.smrt.cash",
-                                       "static-seed1.smartcash.org",
-                                       "static-seed2.smartcash.org",
+static const string mainnet_seeds[] = {"dns.nameseeder.club",
+                                       "dns1.nameseeder.club",
+                                       "seed1.smartcash.org",
+                                       "seed2.smartcash.org",
+                                       "seed.smrt.run",
+                                       "dnsseed.smrt.best",
+                                       "seed.smrt.best",
+                                       "seed.smarts.cash",
+                                       "seed1.smarts.cash",
+                                       "seed2.smarts.cash",
                                        "seed.smartcash.cc",
                                        "seed2.smartcash.cc",
                                        "seed3.smartcash.cc",
                                        "seed4.smartcash.cc", ""};
 
-static const string testnet_seeds[] = {"testnet.smartcash.cc",
+static const string testnet_seeds[] = {"testnet.smrt.run",
                                        "testnet.smrt.cash",
                                        ""};
 static const string *seeds = mainnet_seeds;
